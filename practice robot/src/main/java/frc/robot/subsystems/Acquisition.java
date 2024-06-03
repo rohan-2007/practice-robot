@@ -4,12 +4,31 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkFlex;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
-public class ExampleSubsystem extends SubsystemBase {
+public class Acquisition extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
-  public ExampleSubsystem() {}
+  public static Acquisition instance;
+  private final CANSparkFlex acquisitionMotor = new CANSparkFlex(Constants.acquisitionMotorPort, MotorType.kBrushless);
+  
+
+  public static Acquisition getInstance() {
+    if (instance == null) {
+      instance = new Acquisition();
+    }
+    return instance;
+  }
+
+  public Acquisition() {
+    acquisitionMotor.restoreFactoryDefaults();
+
+    // acquisitionMotor.setIdleMode();
+  }
 
   /**
    * Example command factory method.
